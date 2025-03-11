@@ -59,9 +59,16 @@ export default function ComparisonTable() {
                         <tr className="bg-gray-50 hover:bg-gray-100">
                             <td className="border p-3 font-bold text-sm text-gray-600 hover:cursor-pointer underline" onClick={() => {
                                 setSelectedSortOptions(selectedSortOptions === "price-high" ? "price-low" : "price-high")
-                            }}>Price</td>
+                            }} title="Sort by price">Price</td>
                             {selectedProducts.map((product) => (
-                                <td key={product.id} className="border p-3 text-center font-bold">
+                                <td key={product.id} className={`border p-3 text-center font-bold ${
+                                    // adds background if it's the cheapest or most expensive compared to other products
+                                    selectedProducts.length > 1 &&
+                                    (product.price === Math.min(...selectedProducts.map(p => p.price))
+                                        ? 'bg-green-100/70' :
+                                        product.price === Math.max(...selectedProducts.map(p => p.price))
+                                            ? 'bg-red-100/70' : '')
+                                    }`}>
                                     ${product.price.toFixed(2)}
                                 </td>
                             ))}
@@ -70,9 +77,16 @@ export default function ComparisonTable() {
                         <tr className="hover:bg-gray-100">
                             <td className="border p-3 font-bold text-sm text-gray-600 hover:cursor-pointer underline" onClick={() => {
                                 setSelectedSortOptions(selectedSortOptions === "rating-high" ? "rating-low" : "rating-high")
-                            }}>Rating</td>
+                            }} title="Sort by rating">Rating</td>
                             {selectedProducts.map((product) => (
-                                <td key={product.id} className="border p-3 text-center">
+                                <td key={product.id} className={`border p-3 text-center font-bold ${
+                                    // adds background if it's the highest or lowest rating compared to other products
+                                    selectedProducts.length > 1 &&
+                                    (product.rating.rate === Math.max(...selectedProducts.map(p => p.rating.rate))
+                                        ? 'bg-green-100/70' :
+                                        product.rating.rate === Math.min(...selectedProducts.map(p => p.rating.rate))
+                                            ? 'bg-red-100/70' : '')
+                                    }`}>
                                     <div className="flex items-center justify-center">
                                         <span className="mr-1">⭐</span>
                                         <span>{product.rating.rate}</span>
