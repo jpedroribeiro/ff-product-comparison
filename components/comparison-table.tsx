@@ -47,7 +47,7 @@ export default function ComparisonTable() {
                                         <Image
                                             src={product.image || "/placeholder.svg"}
                                             alt={product.title}
-                                            fill
+                                            fill={process.env.NODE_ENV === "test" ? undefined : true}
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             style={{ objectFit: "contain" }}
                                         />

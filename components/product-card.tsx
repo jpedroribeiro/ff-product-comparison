@@ -3,16 +3,18 @@
 import Image from "next/image"
 import { useProducts, type Product } from "../lib/product-context"
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({ product, imageLoading }: { product: Product, imageLoading: boolean }) {
     const { selectedProducts, toggleProductSelection, MAX_SELECTED } = useProducts()
-    const isSelected = selectedProducts.some((prod) => prod.id === product.id)
+    const isSelected = selectedProducts?.some((prod) => prod.id === product.id)
 
     return (
         <div
+            data-testid="product-card" // NOTE: this data- attribute is for testing only and ideally would be removed in Production
+            aria-checked={isSelected} // For better a11y
+            role="checkbox"
             className={`border rounded-lg overflow-hidden shadow-sm hover:shadow-lg hover:cursor-pointer transition hover:scale-103
                 ${isSelected ? "ring-3 ring-[var(--ff-green)] bg-blue-50" : ""
                 }`}
-
             onClick={(e) => {
                 const target = e.currentTarget;
                 if (selectedProducts.length >= MAX_SELECTED && !isSelected) {
@@ -30,10 +32,11 @@ export default function ProductCard({ product }: { product: Product }) {
                 <Image
                     src={product.image || "/placeholder.svg"}
                     alt={product.title}
-                    fill
+                    fill={process.env.NODE_ENV === "test" ? undefined : true}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     style={{ objectFit: "contain" }}
                     className="py-5 px-4"
+                    loading={imageLoading ? "eager" : "lazy"}
                 />
             </div>
 
@@ -48,6 +51,24 @@ export default function ProductCard({ product }: { product: Product }) {
                     </div>
                 </div>
             </div>
+
+            {/* Product Schema */}
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    "name": product.title,
+                    "description": product.description,
+                    "image": product.image,
+                    "price": product.price,
+                    "currency": "USD",
+                    "aggregateRating": {
+                        "@type": "AggregateRating",
+                        "ratingValue": product.rating.rate,
+                        "ratingCount": product.rating.count
+                    }
+                })}
+            </script>
         </div>
     )
 }

@@ -1,17 +1,5 @@
 "use client"
 
-/*
-
-    I have taken the decision to use React Context to manage state in this application for a few reasons:
-    1) It has a straightforward API that requires little setup or boilerplating
-    2) It's built into react so it's good for performance since it doesn't require downloading and bundling an external package
-    3) Ultimately, it is what this application needs.
-
-    Having said that, it could be a problem in terms of scalling. If this application had several other views, 
-    each with its own state, managing all state here would start to get messy. In that case, it would be best
-    to use a state management library like Redux or a global state management library like Zustand.
-
-*/
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
 export interface Product {
@@ -66,7 +54,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
                 setError(null)
             } catch (err) {
                 setError("Failed to load products. Please try again later.")
-                console.error("Error fetching products:", err)
+                // console.error("Error fetching products:", err)
             } finally {
                 setIsLoading(false)
             }
