@@ -14,6 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fakestoreapi.com" />
+      </head>
       <body className={`border-t-4 border-[var(--ff-green)] bg-gradient-to-b from-indigo-100 to-gray-100 bg-fixed`}>{children}</body>
     </html>
   )
