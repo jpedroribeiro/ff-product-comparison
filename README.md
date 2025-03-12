@@ -84,7 +84,7 @@ I have added a limitation of __max 5 products__ to be selected. This is a person
 
 ## Accessibility, performance, and SEO
 
-I have added a few __accessibility__ features to the application and ensured it followed best practices for performance and SEO. It passes [Lightouse](https://web.dev/lighthouse-axe/) checks.
+I have added a few __accessibility__ features to the application and ensured it followed best practices for performance and SEO. It passes [Lighthouse](https://web.dev/articles/optimize-vitals-lighthouse) checks.
 
 Since the given API doesn't support __pagination__, I output all the products at once. This is OK for this exercise but on a production application, I would have tried to align with backend team to implement pagination. If that was not possible, another solution would to create either a middleware or a custom API route to handle it.
 
