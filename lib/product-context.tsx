@@ -53,6 +53,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
             setError(null);
         } catch (err) {
             setError("Failed to load products. Please try again later.");
+            if (process.env.NODE_ENV !== "test") console.error("Error fetching products:", err);
         } finally {
             setIsLoading(false);
         }
