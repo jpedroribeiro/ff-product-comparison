@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react"
 
 export interface Product {
     id: number
@@ -39,29 +39,28 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     const [sortOption, setSortOption] = useState("default")
     const [selectedSortOptions, setSelectedSortOptions] = useState<string>("")
 
-    useEffect(() => {
-        async function fetchProducts() {
-            try {
-                setIsLoading(true)
-                const response = await fetch("https://fakestoreapi.com/products")
+    const fetchProducts = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            const response = await fetch("https://fakestoreapi.com/products");
 
-                if (!response.ok) {
-                    throw new Error("Failed to fetch products")
-                }
-
-                const data = await response.json()
-                setProducts(data)
-                setError(null)
-            } catch (err) {
-                setError("Failed to load products. Please try again later.")
-                // console.error("Error fetching products:", err)
-            } finally {
-                setIsLoading(false)
+            if (!response.ok) {
+                throw new Error("Failed to fetch products");
             }
-        }
 
-        fetchProducts()
-    }, [])
+            const data = await response.json();
+            setProducts(data);
+            setError(null);
+        } catch (err) {
+            setError("Failed to load products. Please try again later.");
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchProducts();
+    }, [fetchProducts]);
 
     const toggleProductSelection = (product: Product) => {
         setSelectedProducts((prev) => {
