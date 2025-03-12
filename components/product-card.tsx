@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useProducts, type Product } from "../lib/product-context"
 
-export default function ProductCard({ product, imageLoading }: { product: Product, imageLoading: boolean }) {
+export default function ProductCard({ product, imageLoading }: { product: Product, imageLoading?: boolean }) {
     const { selectedProducts, toggleProductSelection, MAX_SELECTED } = useProducts()
     const isSelected = selectedProducts?.some((prod) => prod.id === product.id)
 
