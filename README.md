@@ -1,10 +1,5 @@
 ![Flowers](https://cdn.builder.io/api/v1/image/assets%2Fbb2447fcd31e4bf78272b962b2c40b62%2F4e271ff9aaef42709fe80114acb74de8)
 
-Welcome to my implementation of the Freddie's Flowers Assignment - Product Comparison!
-
-## tl;dr 
-
-You can access the built version of the app at TODO INSERT URL HERE
 
 ## Project structure
 
